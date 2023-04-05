@@ -50,6 +50,10 @@ public final class Notez {
                 ntzEngine.addToCategory("General", argv);
             } else if(argv[0].equals("-c")) {
                 ntzEngine.addToCategory(argv[1], argv);
+            } else if(argv[0].equals("-f")) {
+                ntzEngine.forgetDatabase(argv[1], Integer.parseInt(argv[2]) - 1);
+            } else if(argv[0].equals("-e")){
+                ntzEngine.editDatabase(argv[1], Integer.parseInt(argv[2]) -1, argv[3]);
             }
             // this should give you an idea about how to TEST the Notez engine
               // without having to spend lots of time messing with command line arguments.
@@ -66,6 +70,20 @@ public final class Notez {
             filemap.get(category).add(argv[argv.length-1]);
         } else {
             filemap.put(category, new NoteList(argv[argv.length-1]));
+        }
+    }
+
+    private void editDatabase(String category, int index, String newMessage){
+        if(filemap.containsKey(category)){
+            filemap.get(category).set(index, newMessage);
+        }
+    }
+
+    private void forgetDatabase(String category, int index){
+        if(filemap.containsKey(category)) {
+            filemap.get(category).remove(index);
+        } else {
+            System.out.println("Give me a real category nerd");
         }
     }
 
